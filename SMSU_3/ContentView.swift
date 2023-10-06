@@ -12,13 +12,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            AnimatedButton(value: $animationSpeed, size: 60)
-            HStack {
-                Text("Fast")
-                Slider(value: $animationSpeed, in: 0.1...2, step: 0.1)
-                Text("Slow")
-            }
-            .padding()
+            AnimatedButton(size: 60)
         }
     }
 }
@@ -35,11 +29,7 @@ struct ContentView_Previews: PreviewProvider {
 
 struct AnimatedButton: View {
     @State private var buttonIsOn = false
-    @Binding var value: Double
-   
-    private let animationDuration = 0.35
-    
-    
+
     let size: CGFloat
     
     var body: some View {
@@ -47,10 +37,11 @@ struct AnimatedButton: View {
             guard !buttonIsOn else { return }
            
             buttonIsOn.toggle()
-            withAnimation(.linear(duration: value)) {
+            withAnimation(
+                .interpolatingSpring(stiffness: 80, damping: 12)) {
                 buttonIsOn.toggle()
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + value) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 buttonIsOn = false
             }
         } label: {
@@ -85,6 +76,7 @@ struct AnimatedButton: View {
                         .offset(x: buttonIsOn ? 0 : size * 0.42 )
                 }
             }
+            .padding(.horizontal)
         }
         .clipped()
         .disabled(buttonIsOn)
