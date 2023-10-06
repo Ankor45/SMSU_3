@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var animationSpeed = 0.3
-    
     var body: some View {
         VStack {
             AnimatedButton(size: 60)
