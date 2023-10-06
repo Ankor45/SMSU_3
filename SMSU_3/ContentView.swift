@@ -35,7 +35,6 @@ struct AnimatedButton: View {
     var body: some View {
         Button {
             guard !buttonIsOn else { return }
-           
             buttonIsOn.toggle()
             withAnimation(
                 .interpolatingSpring(stiffness: 80, damping: 12)) {
